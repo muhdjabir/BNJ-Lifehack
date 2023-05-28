@@ -13,12 +13,13 @@ import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
 
-const pages = ["Products", "Pricing", "Blog"];
-const settings = ["Profile", "Account", "Dashboard", "Logout"];
+const pages = ["Teams", "Tasks", "Resources", "Dashboard"];
+const settings = ["Profile", "Logout"];
 
 function ResponsiveAppBar() {
     const [anchorElNav, setAnchorElNav] = useState(null);
     const [anchorElUser, setAnchorElUser] = useState(null);
+    const [user, setUser] = useState("");
 
     const handleOpenNavMenu = (event) => {
         setAnchorElNav(event.currentTarget);
@@ -36,7 +37,7 @@ function ResponsiveAppBar() {
     };
 
     return (
-        <AppBar position="static">
+        <AppBar position="static" sx={{ backgroundColor: "#A6D8D4" }}>
             <Container maxWidth="xl">
                 <Toolbar disableGutters>
                     <AdbIcon
@@ -53,13 +54,12 @@ function ResponsiveAppBar() {
                             fontFamily: "monospace",
                             fontWeight: 700,
                             letterSpacing: ".3rem",
-                            color: "inherit",
+                            color: "black",
                             textDecoration: "none",
                         }}
                     >
-                        LOGO
+                        WorkBliss
                     </Typography>
-
                     <Box
                         sx={{
                             flexGrow: 1,
@@ -72,7 +72,7 @@ function ResponsiveAppBar() {
                             aria-controls="menu-appbar"
                             aria-haspopup="true"
                             onClick={handleOpenNavMenu}
-                            color="inherit"
+                            color="black"
                         >
                             <MenuIcon />
                         </IconButton>
@@ -99,7 +99,10 @@ function ResponsiveAppBar() {
                                     key={page}
                                     onClick={handleCloseNavMenu}
                                 >
-                                    <Typography textAlign="center">
+                                    <Typography
+                                        textAlign="center"
+                                        color={"black"}
+                                    >
                                         {page}
                                     </Typography>
                                 </MenuItem>
@@ -121,11 +124,11 @@ function ResponsiveAppBar() {
                             fontFamily: "monospace",
                             fontWeight: 700,
                             letterSpacing: ".3rem",
-                            color: "inherit",
+                            color: "black",
                             textDecoration: "none",
                         }}
                     >
-                        LOGO
+                        WorkBliss
                     </Typography>
                     <Box
                         sx={{
@@ -137,52 +140,30 @@ function ResponsiveAppBar() {
                             <Button
                                 key={page}
                                 onClick={handleCloseNavMenu}
-                                sx={{ my: 2, color: "white", display: "block" }}
+                                sx={{ my: 2, color: "black", display: "block" }}
                             >
                                 {page}
                             </Button>
                         ))}
                     </Box>
-
-                    <Box sx={{ flexGrow: 0 }}>
-                        <Tooltip title="Open settings">
-                            <IconButton
-                                onClick={handleOpenUserMenu}
-                                sx={{ p: 0 }}
-                            >
-                                <Avatar
-                                    alt="Remy Sharp"
-                                    src="/static/images/avatar/2.jpg"
-                                />
-                            </IconButton>
-                        </Tooltip>
-                        <Menu
-                            sx={{ mt: "45px" }}
-                            id="menu-appbar"
-                            anchorEl={anchorElUser}
-                            anchorOrigin={{
-                                vertical: "top",
-                                horizontal: "right",
+                    <Box sx={{ flexGrow: 0, display: "flex" }}>
+                        <Button
+                            variant="outlined"
+                            color="success"
+                            sx={{
+                                backgroundColor: "white",
+                                marginX: 3,
+                                color: "black",
                             }}
-                            keepMounted
-                            transformOrigin={{
-                                vertical: "top",
-                                horizontal: "right",
-                            }}
-                            open={Boolean(anchorElUser)}
-                            onClose={handleCloseUserMenu}
                         >
-                            {settings.map((setting) => (
-                                <MenuItem
-                                    key={setting}
-                                    onClick={handleCloseUserMenu}
-                                >
-                                    <Typography textAlign="center">
-                                        {setting}
-                                    </Typography>
-                                </MenuItem>
-                            ))}
-                        </Menu>
+                            Log out
+                        </Button>
+                        <Tooltip title="Open settings">
+                            <Avatar
+                                alt="Remy Sharp"
+                                src="/static/images/avatar/2.jpg"
+                            />
+                        </Tooltip>
                     </Box>
                 </Toolbar>
             </Container>
