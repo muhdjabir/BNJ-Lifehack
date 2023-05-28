@@ -14,10 +14,10 @@ db = SQLAlchemy(app)
 CORS(app)
 
 from .task import tasks
-# from .auth import auth
+from .event import events
 
 app.register_blueprint(tasks)
-# app.register_blueprint(routes)
+app.register_blueprint(events)
 
 from .models import User, Task, Event, Team
 

@@ -94,6 +94,5 @@ def format_event(event):
     return {
         "id": event.id,
         "description": event.description,
-        "time": event.team,
         "team_id": event.team_id
     }

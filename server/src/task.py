@@ -46,11 +46,6 @@ def update_event(id):
     db.session.commit()
     return {'task': format_task(task.one())}, 200
 
-@tasks.route("/api/task/item", methods = ["GET"])
-def get_my_task():
-    task_id = request.json["task"]
-    return {"tasks": task_id}
-
 @tasks.route("/api/task/items", methods = ["GET"])
 def get_team_tasks():
     task_id = request.json["task"]
