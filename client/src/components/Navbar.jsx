@@ -13,6 +13,7 @@ import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
+import LogoutIcon from "@mui/icons-material/Logout";
 
 const pages = [
     { page: "Teams", path: "/teams" },
@@ -94,7 +95,10 @@ function ResponsiveAppBar() {
                             {pages.map((page) => (
                                 <Link
                                     to={page["path"]}
-                                    style={{ textDecoration: "none" }}
+                                    style={{
+                                        textDecoration: "none",
+                                        padding: 3,
+                                    }}
                                 >
                                     <MenuItem
                                         key={page["page"]}
@@ -109,11 +113,20 @@ function ResponsiveAppBar() {
                                     </MenuItem>
                                 </Link>
                             ))}
-                            <MenuItem key="Logout" onClick={handleCloseNavMenu}>
-                                <Typography textAlign="center" color={"black"}>
-                                    Logout
-                                </Typography>
-                            </MenuItem>
+                            <Link to="/" style={{ textDecoration: "none" }}>
+                                <MenuItem
+                                    key="Logout"
+                                    onClick={handleCloseNavMenu}
+                                >
+                                    <Typography
+                                        textAlign="center"
+                                        color={"black"}
+                                    >
+                                        <LogoutIcon />
+                                        Logout
+                                    </Typography>
+                                </MenuItem>
+                            </Link>
                         </Menu>
                     </Box>
                     <AdbIcon
@@ -163,18 +176,22 @@ function ResponsiveAppBar() {
                         ))}
                     </Box>
                     <Box sx={{ flexGrow: 0, display: "flex" }}>
-                        <Button
-                            variant="outlined"
-                            color="success"
-                            sx={{
-                                backgroundColor: "white",
-                                marginX: 3,
-                                color: "black",
-                                display: { sm: "none", md: "flex" },
-                            }}
-                        >
-                            Log out
-                        </Button>
+                        <Link to="/" style={{ textDecoration: "none" }}>
+                            <Button
+                                variant="outlined"
+                                color="success"
+                                sx={{
+                                    backgroundColor: "white",
+                                    marginX: 3,
+                                    color: "black",
+                                    display: { sm: "none", md: "flex" },
+                                }}
+                            >
+                                {" "}
+                                <LogoutIcon />
+                                Log out
+                            </Button>
+                        </Link>
                         <Tooltip title="Open settings">
                             <Avatar
                                 alt="Remy Sharp"
