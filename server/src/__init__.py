@@ -16,10 +16,12 @@ CORS(app)
 from .task import tasks
 from .event import events
 from .team import teams
+from .user import users
 
 app.register_blueprint(tasks)
 app.register_blueprint(events)
 app.register_blueprint(teams)
+app.register_blueprint(users)
 
 from .models import User, Task, Event, Team
 

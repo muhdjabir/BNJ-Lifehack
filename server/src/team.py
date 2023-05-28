@@ -1,5 +1,5 @@
 from flask import Blueprint, request
-from .models import Team, format_team
+from .models import Team, format_team, User, format_user
 from src import db
 
 teams = Blueprint('teams', __name__)
@@ -47,9 +47,15 @@ def add_member(id):
     temp_array = team[0].members_id
     temp_array.append(members_id)
     team.update(dict(members_id = temp_array))
+
+    ## Update User
+    user = User.query.filter_by(id=members_id)
+    user_temp_array = user[0].team_id
+    user_temp_array.append(id)
+    user.update(dict(team_id = user_temp_array))
     db.session.commit()
     # return {'team': temp_array}
-    return {'team': format_team(team.one())}, 200
+    return {'team': format_team(team.one()), 'user': format_user(user.one())}, 200
 
 @teams.route("/api/team/items", methods = ["GET"])
 def get_user_teams():
