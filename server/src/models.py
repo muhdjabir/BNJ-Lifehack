@@ -7,8 +7,8 @@ class User(db.Model):
     name = db.Column(db.String(), nullable = False)
     email = db.Column(db.String(), nullable = False, unique = True)
     role = db.Column(db.String(), nullable = False)
-    team_id = db.Column(ARRAY(db.String()), server_default= "{}")
-    task_id = db.Column(ARRAY(db.String()), server_default= "{}")
+    team_id = db.Column(ARRAY(db.Integer), server_default= "{}")
+    task_id = db.Column(ARRAY(db.Integer), server_default= "{}")
     points = db.Column(db.Integer, nullable = False, default = 0)
 
     def __repr__(self):
