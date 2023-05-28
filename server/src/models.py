@@ -7,6 +7,8 @@ class User(db.Model):
     name = db.Column(db.String(), nullable = False)
     email = db.Column(db.String(), nullable = False, unique = True)
     role = db.Column(db.String(), nullable = False)
+    team_id = db.Column(db.ARRAY(db.String()), server_default= "{}")
+    task_id = db.Column(db.ARRAY(db.String()), server_default= "{}")
 
     def __repr__(self):
         return f'User: {self.id} {self.name} {self.role}'
@@ -21,25 +23,31 @@ def format_user(user):
     return {
         "id": user.id,
         "email": user.email,
-        "username": user.username
+        "username": user.username,
+        "role": user.role,
+        "team_id": user.team_id,
+        "task_id": user.task_id
     }
 
 class Task(db.Model):
     id = db.Column(db.Integer, primary_key = True)
-    description = db.Column(db.String(), nullable = False, default = "Open")
-    status = db.Column(db.String(), nullable = False)
+    description = db.Column(db.String(), nullable = False)
+    priority = db.Column(db.String(), nullable = False)
+    status = db.Column(db.String(), nullable = False, default = "Open")
 
     def __repr__(self):
         return f'Task ID: {self.id} Description: {self.description} Status: {self.status}'
     
-    def __init__(self, description):
+    def __init__(self, description, priority):
         self.description = description
+        self.priority = priority
 
 def format_task(task):
     return { 
         "id": task.id,
         "description": task.description,
-        "status": task.status
+        "status": task.status,
+        "priority": task.priority
     }
 
 class Team(db.Model):
@@ -86,6 +94,6 @@ def format_event(event):
     return {
         "id": event.id,
         "description": event.description,
-        "time": event.team,
-        "team_id": event.team_id
+        "team_id": event.team_id,
+        "time": event.time
     }

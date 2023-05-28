@@ -13,11 +13,13 @@ app.config['SQLALCHEMY_DATABASE_URI'] = POSTGRES_URI
 db = SQLAlchemy(app)
 CORS(app)
 
-# from .routes import routes
-# from .auth import auth
+from .task import tasks
+from .event import events
+from .team import teams
 
-# app.register_blueprint(auth)
-# app.register_blueprint(routes)
+app.register_blueprint(tasks)
+app.register_blueprint(events)
+app.register_blueprint(teams)
 
 from .models import User, Task, Event, Team
 
