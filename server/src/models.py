@@ -27,6 +27,7 @@ def format_user(user):
 class Task(db.Model):
     id = db.Column(db.Integer, primary_key = True)
     description = db.Column(db.String(), nullable = False, default = "Open")
+    priority = db.Column(db.String(), nullable = False)
     status = db.Column(db.String(), nullable = False)
 
     def __repr__(self):
