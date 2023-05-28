@@ -42,8 +42,8 @@ def delete_event(id):
 @events.route("/api/event/<id>", methods = ["PATCH"])
 def update_event(id):
     event = Event.query.filter_by(id=id)
-    status = request.json['status']
-    event.update(dict(status = status))
+    time = request.json['time']
+    event.update(dict(time = time))
     db.session.commit()
     return {'event': format_event(event.one())}, 200
 
