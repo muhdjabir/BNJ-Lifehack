@@ -98,6 +98,11 @@ function ResponsiveAppBar() {
                                     </Typography>
                                 </MenuItem>
                             ))}
+                            <MenuItem key="Logout" onClick={handleCloseNavMenu}>
+                                <Typography textAlign="center" color={"black"}>
+                                    Logout
+                                </Typography>
+                            </MenuItem>
                         </Menu>
                     </Box>
                     <AdbIcon
@@ -145,6 +150,7 @@ function ResponsiveAppBar() {
                                 backgroundColor: "white",
                                 marginX: 3,
                                 color: "black",
+                                display: { sm: "none", md: "flex" },
                             }}
                         >
                             Log out
