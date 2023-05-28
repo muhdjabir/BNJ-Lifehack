@@ -8,6 +8,7 @@ class User(db.Model):
     role = db.Column(db.String(), nullable = False)
     team_id = db.Column(db.ARRAY(db.String()), server_default= "{}")
     task_id = db.Column(db.ARRAY(db.String()), server_default= "{}")
+    points = db.Column(db.Integer, nullable = False, default = 0)
 
     def __repr__(self):
         return f'User: {self.id} {self.name} {self.role}'
@@ -24,7 +25,8 @@ def format_user(user):
         "name": user.name,
         "role": user.role,
         "team_id": user.team_id,
-        "task_id": user.task_id
+        "task_id": user.task_id,
+        "points": user.points
     }
 
 class Task(db.Model):
