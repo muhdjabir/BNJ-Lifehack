@@ -52,9 +52,8 @@ def add_member(id):
     return {'team': format_team(team.one())}, 200
 
 @teams.route("/api/team/items", methods = ["GET"])
-def get_team_teams():
+def get_user_teams():
     team_id = request.json["team"]
-    print(team_id)
     teams = Team.query.filter(Team.id.in_(team_id)).all()
     team_list = []
     for team in teams:
