@@ -1,5 +1,4 @@
 from flask_sqlalchemy import SQLAlchemy
-# from werkzeug.security import generate_password_hash, check_password_hash
 from src import db
 
 class User(db.Model):
@@ -13,8 +12,7 @@ class User(db.Model):
     def __repr__(self):
         return f'User: {self.id} {self.name} {self.role}'
     
-    def __init__(self, id, name, email, role):
-        self.id = id
+    def __init__(self, name, email, role):
         self.name = name
         self.email = email
         self.role = role
@@ -23,7 +21,7 @@ def format_user(user):
     return {
         "id": user.id,
         "email": user.email,
-        "username": user.username,
+        "name": user.name,
         "role": user.role,
         "team_id": user.team_id,
         "task_id": user.task_id
