@@ -26,21 +26,23 @@ def format_user(user):
 
 class Task(db.Model):
     id = db.Column(db.Integer, primary_key = True)
-    description = db.Column(db.String(), nullable = False, default = "Open")
+    description = db.Column(db.String(), nullable = False)
     priority = db.Column(db.String(), nullable = False)
-    status = db.Column(db.String(), nullable = False)
+    status = db.Column(db.String(), nullable = False, default = "Open")
 
     def __repr__(self):
         return f'Task ID: {self.id} Description: {self.description} Status: {self.status}'
     
-    def __init__(self, description):
+    def __init__(self, description, priority):
         self.description = description
+        self.priority = priority
 
 def format_task(task):
     return { 
         "id": task.id,
         "description": task.description,
-        "status": task.status
+        "status": task.status,
+        "priority": task.priority
     }
 
 class Team(db.Model):

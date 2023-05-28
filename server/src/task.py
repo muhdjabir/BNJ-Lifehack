@@ -11,7 +11,8 @@ def hello():
 @tasks.route("/api/task", methods = ["POST"])
 def create_task():
     description = request.json['description']
-    task = Task(description)
+    priority = request.json['priority']
+    task = Task(description, priority)
     db.session.add(task)
     db.session.commit()
     return format_task(task)
