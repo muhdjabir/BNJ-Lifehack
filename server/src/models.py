@@ -1,4 +1,5 @@
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy.dialects.postgresql import ARRAY
 from src import db
 
 class User(db.Model):
@@ -6,8 +7,8 @@ class User(db.Model):
     name = db.Column(db.String(), nullable = False)
     email = db.Column(db.String(), nullable = False, unique = True)
     role = db.Column(db.String(), nullable = False)
-    team_id = db.Column(db.ARRAY(db.String()), server_default= "{}")
-    task_id = db.Column(db.ARRAY(db.String()), server_default= "{}")
+    team_id = db.Column(ARRAY(db.String()), server_default= "{}")
+    task_id = db.Column(ARRAY(db.String()), server_default= "{}")
     points = db.Column(db.Integer, nullable = False, default = 0)
 
     def __repr__(self):
@@ -55,8 +56,8 @@ class Team(db.Model):
     name = db.Column(db.String(), nullable = False)
     description = db.Column(db.String(), nullable = False)
     manager_id = db.Column(db.Integer, nullable = False)
-    members_id = db.Column(db.ARRAY(db.Integer), server_default= "{}", nullable = False)
-    events_id = db.Column(db.ARRAY(db.Integer), server_default= "{}")
+    members_id = db.Column(ARRAY(db.Integer), server_default= "{}", nullable = False)
+    events_id = db.Column(ARRAY(db.Integer), server_default= "{}")
 
     def __repr__(self):
         return f'ID: {self.id} Name: {self.name} Description: {self.description}'
