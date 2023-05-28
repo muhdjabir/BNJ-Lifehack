@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -13,7 +14,12 @@ import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
 
-const pages = ["Teams", "Tasks", "Resources", "Dashboard"];
+const pages = [
+    { page: "Teams", path: "/teams" },
+    { page: "Tasks", path: "/tasks" },
+    { page: "Resources", path: "/resources" },
+    { page: "Dashboard", path: "/dashboard" },
+];
 
 function ResponsiveAppBar() {
     const [anchorElNav, setAnchorElNav] = useState(null);
@@ -35,7 +41,7 @@ function ResponsiveAppBar() {
                         sx={{ display: { xs: "none", md: "flex" }, mr: 1 }}
                     />
                     <Typography
-                        variant="h6"
+                        variant="h5"
                         noWrap
                         component="a"
                         href="/"
@@ -86,17 +92,22 @@ function ResponsiveAppBar() {
                             }}
                         >
                             {pages.map((page) => (
-                                <MenuItem
-                                    key={page}
-                                    onClick={handleCloseNavMenu}
+                                <Link
+                                    to={page["path"]}
+                                    style={{ textDecoration: "none" }}
                                 >
-                                    <Typography
-                                        textAlign="center"
-                                        color={"black"}
+                                    <MenuItem
+                                        key={page["page"]}
+                                        onClick={handleCloseNavMenu}
                                     >
-                                        {page}
-                                    </Typography>
-                                </MenuItem>
+                                        <Typography
+                                            textAlign="center"
+                                            color={"black"}
+                                        >
+                                            {page["page"]}
+                                        </Typography>
+                                    </MenuItem>
+                                </Link>
                             ))}
                             <MenuItem key="Logout" onClick={handleCloseNavMenu}>
                                 <Typography textAlign="center" color={"black"}>
@@ -133,13 +144,22 @@ function ResponsiveAppBar() {
                         }}
                     >
                         {pages.map((page) => (
-                            <Button
-                                key={page}
-                                onClick={handleCloseNavMenu}
-                                sx={{ my: 2, color: "black", display: "block" }}
+                            <Link
+                                to={page["path"]}
+                                style={{ textDecoration: "none" }}
                             >
-                                {page}
-                            </Button>
+                                <Button
+                                    key={page["page"]}
+                                    onClick={handleCloseNavMenu}
+                                    sx={{
+                                        my: 2,
+                                        color: "black",
+                                        display: "block",
+                                    }}
+                                >
+                                    {page["page"]}
+                                </Button>
+                            </Link>
                         ))}
                     </Box>
                     <Box sx={{ flexGrow: 0, display: "flex" }}>
