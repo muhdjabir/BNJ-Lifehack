@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -12,8 +13,14 @@ import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
+import LogoutIcon from "@mui/icons-material/Logout";
 
-const pages = ["Teams", "Tasks", "Resources", "Dashboard"];
+const pages = [
+    { page: "Teams", path: "/teams" },
+    { page: "Tasks", path: "/tasks" },
+    { page: "Resources", path: "/resources" },
+    { page: "Dashboard", path: "/dashboard" },
+];
 
 function ResponsiveAppBar() {
     const [anchorElNav, setAnchorElNav] = useState(null);
@@ -35,7 +42,7 @@ function ResponsiveAppBar() {
                         sx={{ display: { xs: "none", md: "flex" }, mr: 1 }}
                     />
                     <Typography
-                        variant="h6"
+                        variant="h5"
                         noWrap
                         component="a"
                         href="/"
@@ -86,23 +93,40 @@ function ResponsiveAppBar() {
                             }}
                         >
                             {pages.map((page) => (
+                                <Link
+                                    to={page["path"]}
+                                    style={{
+                                        textDecoration: "none",
+                                        padding: 3,
+                                    }}
+                                >
+                                    <MenuItem
+                                        key={page["page"]}
+                                        onClick={handleCloseNavMenu}
+                                    >
+                                        <Typography
+                                            textAlign="center"
+                                            color={"black"}
+                                        >
+                                            {page["page"]}
+                                        </Typography>
+                                    </MenuItem>
+                                </Link>
+                            ))}
+                            <Link to="/" style={{ textDecoration: "none" }}>
                                 <MenuItem
-                                    key={page}
+                                    key="Logout"
                                     onClick={handleCloseNavMenu}
                                 >
                                     <Typography
                                         textAlign="center"
                                         color={"black"}
                                     >
-                                        {page}
+                                        <LogoutIcon />
+                                        Logout
                                     </Typography>
                                 </MenuItem>
-                            ))}
-                            <MenuItem key="Logout" onClick={handleCloseNavMenu}>
-                                <Typography textAlign="center" color={"black"}>
-                                    Logout
-                                </Typography>
-                            </MenuItem>
+                            </Link>
                         </Menu>
                     </Box>
                     <AdbIcon
@@ -133,28 +157,41 @@ function ResponsiveAppBar() {
                         }}
                     >
                         {pages.map((page) => (
-                            <Button
-                                key={page}
-                                onClick={handleCloseNavMenu}
-                                sx={{ my: 2, color: "black", display: "block" }}
+                            <Link
+                                to={page["path"]}
+                                style={{ textDecoration: "none" }}
                             >
-                                {page}
-                            </Button>
+                                <Button
+                                    key={page["page"]}
+                                    onClick={handleCloseNavMenu}
+                                    sx={{
+                                        my: 2,
+                                        color: "black",
+                                        display: "block",
+                                    }}
+                                >
+                                    {page["page"]}
+                                </Button>
+                            </Link>
                         ))}
                     </Box>
                     <Box sx={{ flexGrow: 0, display: "flex" }}>
-                        <Button
-                            variant="outlined"
-                            color="success"
-                            sx={{
-                                backgroundColor: "white",
-                                marginX: 3,
-                                color: "black",
-                                display: { sm: "none", md: "flex" },
-                            }}
-                        >
-                            Log out
-                        </Button>
+                        <Link to="/" style={{ textDecoration: "none" }}>
+                            <Button
+                                variant="outlined"
+                                color="success"
+                                sx={{
+                                    backgroundColor: "white",
+                                    marginX: 3,
+                                    color: "black",
+                                    display: { sm: "none", md: "flex" },
+                                }}
+                            >
+                                {" "}
+                                <LogoutIcon />
+                                Log out
+                            </Button>
+                        </Link>
                         <Tooltip title="Open settings">
                             <Avatar
                                 alt="Remy Sharp"
