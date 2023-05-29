@@ -57,7 +57,7 @@ def add_member(id):
     # return {'team': temp_array}
     return {'team': format_team(team.one()), 'user': format_user(user.one())}, 200
 
-@teams.route("/api/team/items", methods = ["GET"])
+@teams.route("/api/team/items", methods = ["POST"])
 def get_user_teams():
     team_id = request.json["team"]
     teams = Team.query.filter(Team.id.in_(team_id)).all()
