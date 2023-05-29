@@ -15,8 +15,14 @@ def create_team():
     manager_id = request.json['manager_id']
     team = Team(name, description, manager_id)
     db.session.add(team)
+
+     ## Update User
+    user = User.query.filter_by(id=manager_id)
+    user_temp_array = user[0].team_id
+    user_temp_array.append(team.id)
+    user.update(dict(team_id = user_temp_array))
     db.session.commit()
-    return format_team(team), 200
+    return {'team': format_team(team)} , 200
 
 @teams.route("/api/team", methods = ["GET"])
 def get_teams():
