@@ -11,7 +11,7 @@ const Teams = () => {
                     marginTop: 5,
                 }}
             >
-                Teams
+                Your Teams
             </Typography>
             <TeamTable />
         </div>

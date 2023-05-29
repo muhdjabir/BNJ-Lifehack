@@ -10,6 +10,7 @@ import Typography from "@mui/material/Typography";
 import { useEffect, useState } from "react";
 
 const TeamCard = ({ team }) => {
+    const [manager, setManager] = useState({});
     const [events, setEvents] = useState([]);
     const [members, setMembers] = useState([]);
 
@@ -47,6 +48,20 @@ const TeamCard = ({ team }) => {
         fetchEvents();
     }, []);
 
+    useEffect(() => {
+        const fetchManager = async () => {
+            const response = await fetch(`/api/user/${team.manager_id}`);
+            const json = await response.json();
+
+            if (response.ok) {
+                // dispatch({ type: "SET_Manager", payload: json });
+                setManager(json["user"]);
+            }
+        };
+
+        fetchManager();
+    }, []);
+
     return (
         <Card
             sx={{
@@ -55,10 +70,8 @@ const TeamCard = ({ team }) => {
         >
             <CardContent>
                 <div style={{ marginBottom: 20, marginTop: 20 }}>
-                    <Typography variant="h5">Manager ID</Typography>
-                    <Typography variant="subtitle1">
-                        {team.manager_id}
-                    </Typography>
+                    <Typography variant="h5">Manager</Typography>
+                    <Typography variant="subtitle1">{manager.name}</Typography>
                 </div>
                 <div style={{ marginBottom: 20, marginTop: 20 }}>
                     <Typography variant="h5">Description</Typography>

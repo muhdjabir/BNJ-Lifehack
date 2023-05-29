@@ -4,16 +4,21 @@ import Tab from "@mui/material/Tab";
 import Box from "@mui/material/Box";
 import TabPanel from "./TabPanel";
 import TeamCard from "../cards/TeamCard";
+import TeamForm from "../forms/TeamForm";
+import AddBoxIcon from "@mui/icons-material/AddBox";
+import IconButton from "@mui/material/IconButton";
 
 const TeamTable = () => {
     const [value, setValue] = useState(0);
     const [teams, setTeams] = useState([]);
+    const [open, setOpen] = useState(false);
 
-    const a11yProps = (index) => {
-        return {
-            id: `simple-tab-${index}`,
-            "aria-controls": `simple-tabpanel-${index}`,
-        };
+    const handleClickOpen = () => {
+        setOpen(true);
+    };
+
+    const handleClose = () => {
+        setOpen(false);
     };
 
     useEffect(() => {
@@ -37,12 +42,7 @@ const TeamTable = () => {
         };
 
         fetchTeams();
-        console.log(teams);
     }, []);
-
-    // const handleChangeIndex = (index) => {
-    //     setValue(index);
-    // };
 
     const handleChange = (event, newValue) => {
         setValue(newValue);
@@ -58,20 +58,28 @@ const TeamTable = () => {
                 display: "grid",
             }}
         >
-            <Tabs
-                value={value}
-                onChange={handleChange}
-                variant="scrollable"
-                scrollButtons="auto"
-                aria-label="scrollable auto tabs example"
-                sx={{
+            <TeamForm open={open} handleClose={handleClose} />
+            <div
+                style={{
                     margin: "auto",
                     gridRowStart: 1,
                     gridRowEnd: 1,
+                    display: "flex",
                 }}
             >
-                {teams && teams.map((team) => <Tab label={team.name} />)}
-            </Tabs>
+                <Tabs
+                    value={value}
+                    onChange={handleChange}
+                    variant="scrollable"
+                    scrollButtons="auto"
+                    aria-label="scrollable auto tabs example"
+                >
+                    {teams && teams.map((team) => <Tab label={team.name} />)}
+                </Tabs>
+                <IconButton onClick={() => setOpen(true)}>
+                    <AddBoxIcon />
+                </IconButton>
+            </div>
             {teams &&
                 teams.map((team, index) => (
                     <TabPanel value={value} index={index}>
