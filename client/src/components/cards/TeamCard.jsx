@@ -1,5 +1,9 @@
 import Card from "@mui/material/Card";
-import CardActions from "@mui/material/CardActions";
+import List from "@mui/material/List";
+import ListItem from "@mui/material/ListItem";
+import ListItemButton from "@mui/material/ListItemButton";
+import ListItemIcon from "@mui/material/ListItemIcon";
+import ListItemText from "@mui/material/ListItemText";
 import CardContent from "@mui/material/CardContent";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
@@ -67,20 +71,38 @@ const TeamCard = ({ team }) => {
                     <Typography variant="subtitle1">
                         {events &&
                             events.map((event, index) => (
-                                <Typography variant="subtitle1" key={index}>
-                                    {event.id} {event.description} {event.time}
-                                </Typography>
+                                <Card>
+                                    <CardContent>
+                                        <Typography variant="h6" key={index}>
+                                            {event.time}
+                                        </Typography>
+                                        <Typography
+                                            variant="subtitle1"
+                                            key={index}
+                                        >
+                                            {event.description}
+                                        </Typography>
+                                    </CardContent>
+                                </Card>
                             ))}
                     </Typography>
                 </div>
                 <div style={{ marginBottom: 20, marginTop: 20 }}>
                     <Typography variant="h5">Members</Typography>
-                    {members &&
-                        members.map((member, index) => (
-                            <Typography variant="subtitle1" key={index}>
-                                {member.id} {member.name} {member.role}
-                            </Typography>
-                        ))}
+                    <List>
+                        {members &&
+                            members.map((member, index) => (
+                                <ListItem>
+                                    <ListItemText
+                                        primary={member.name}
+                                        secondary={`${member.role} Points:${member.points}`}
+                                    />
+                                </ListItem>
+                                // <Typography variant="subtitle1" key={index}>
+                                //     {member.id} {member.name} {member.role}
+                                // </Typography>
+                            ))}
+                    </List>
                 </div>
             </CardContent>
         </Card>
