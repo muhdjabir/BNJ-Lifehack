@@ -9,14 +9,14 @@ def hello():
     return 'Hello There'
 
 @users.route("/api/user", methods = ["POST"])
-def create_user():
-    name = request.json["name"]
-    email = request.json['email']
-    role = request.json['role']
-    user = User(name, email, role)
-    db.session.add(user)
-    db.session.commit()
-    return format_user(user), 200
+# def create_user():
+#     name = request.json["name"]
+#     email = request.json['email']
+#     role = request.json['role']
+#     user = User(name, email, role)
+#     db.session.add(user)
+#     db.session.commit()
+#     return format_user(user), 200
 
 @users.route("/api/user", methods = ["GET"])
 def get_users():
