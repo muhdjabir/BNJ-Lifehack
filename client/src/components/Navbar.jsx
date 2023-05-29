@@ -39,9 +39,9 @@ function ResponsiveAppBar() {
         <AppBar position="static" sx={{ backgroundColor: "#A6D8D4" }}>
             <Container maxWidth="xl">
                 <Toolbar disableGutters>
-                    <AdbIcon
+                    {/* <AdbIcon
                         sx={{ display: { xs: "none", md: "flex" }, mr: 1 }}
-                    />
+                    /> */}
                     <Typography
                         variant="h5"
                         noWrap
@@ -131,9 +131,9 @@ function ResponsiveAppBar() {
                             </Link>
                         </Menu>
                     </Box>
-                    <AdbIcon
+                    {/* <AdbIcon
                         sx={{ display: { xs: "flex", md: "none" }, mr: 1 }}
-                    />
+                    /> */}
                     <Typography
                         variant="h5"
                         noWrap
