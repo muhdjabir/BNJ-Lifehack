@@ -95,6 +95,7 @@ function ResponsiveAppBar() {
                             {pages.map((page) => (
                                 <Link
                                     to={page["path"]}
+                                    key={page["page"]}
                                     style={{
                                         textDecoration: "none",
                                         padding: 3,
@@ -159,6 +160,7 @@ function ResponsiveAppBar() {
                         {pages.map((page) => (
                             <Link
                                 to={page["path"]}
+                                key={page["page"]}
                                 style={{ textDecoration: "none" }}
                             >
                                 <Button
