@@ -3,6 +3,7 @@ import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Box from "@mui/material/Box";
 import TabPanel from "./TabPanel";
+import TeamCard from "../cards/TeamCard";
 
 const TeamTable = () => {
     const [value, setValue] = useState(0);
@@ -39,9 +40,9 @@ const TeamTable = () => {
         console.log(teams);
     }, []);
 
-    const handleChangeIndex = (index) => {
-        setValue(index);
-    };
+    // const handleChangeIndex = (index) => {
+    //     setValue(index);
+    // };
 
     const handleChange = (event, newValue) => {
         setValue(newValue);
@@ -69,27 +70,14 @@ const TeamTable = () => {
                     gridRowEnd: 1,
                 }}
             >
-                <Tab label="Item One" {...a11yProps(0)} />
-                <Tab label="Item Two" {...a11yProps(1)} />
-                <Tab label="Item Three" {...a11yProps(2)} />
-                <Tab label="Item Four" {...a11yProps(3)} />
+                {teams && teams.map((team) => <Tab label={team.name} />)}
             </Tabs>
-            <TabPanel value={value} index={0}>
-                {/* {teams} */}
-                {teams &&
-                    teams.map((team) => (
-                        <p key={team.name}>{team.description}</p>
-                    ))}
-            </TabPanel>
-            <TabPanel value={value} index={1}>
-                Item Two
-            </TabPanel>
-            <TabPanel value={value} index={2}>
-                Item Three
-            </TabPanel>
-            <TabPanel value={value} index={3}>
-                Item Three
-            </TabPanel>
+            {teams &&
+                teams.map((team, index) => (
+                    <TabPanel value={value} index={index}>
+                        <TeamCard team={team} />
+                    </TabPanel>
+                ))}
         </Box>
     );
 };

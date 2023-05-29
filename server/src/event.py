@@ -47,7 +47,7 @@ def update_event(id):
     db.session.commit()
     return {'event': format_event(event.one())}, 200
 
-@events.route("/api/event/items", methods = ["GET"])
+@events.route("/api/event/items", methods = ["POST"])
 def get_team_events():
     event_id = request.json["event"]
     print(event_id)
