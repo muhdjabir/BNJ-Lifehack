@@ -7,10 +7,10 @@ import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import { useAuthContext } from "../../hooks/useAuthContext";
 
-const TeamForm = ({ open, handleClose }) => {
+const EventForm = ({ open, handleClose }) => {
     const { user } = useAuthContext();
 
-    const createTeam = async () => {
+    const createEvent = async () => {
         console.log("chicken");
         handleClose();
     };
@@ -30,7 +30,7 @@ const TeamForm = ({ open, handleClose }) => {
                         autoFocus
                         margin="dense"
                         id="name"
-                        label="Team Name"
+                        label="Event Name"
                         type="text"
                         fullWidth
                         variant="standard"
@@ -39,7 +39,7 @@ const TeamForm = ({ open, handleClose }) => {
                         autoFocus
                         margin="dense"
                         id="name"
-                        label="Team Description"
+                        label="Event Description"
                         type="text"
                         multiline
                         fullWidth
@@ -48,11 +48,11 @@ const TeamForm = ({ open, handleClose }) => {
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={handleClose}>Cancel</Button>
-                    <Button onClick={createTeam}>Create</Button>
+                    <Button onClick={createEvent}>Create</Button>
                 </DialogActions>
             </Dialog>
         </div>
     );
 };
 
-export default TeamForm;
+export default EventForm;
