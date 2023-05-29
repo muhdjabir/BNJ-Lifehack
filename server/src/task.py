@@ -1,5 +1,6 @@
 from flask import Blueprint, request
-from .models import Task, format_task
+from .models import Task, format_task, User, format_user
+from sqlalchemy.dialects.postgresql import ARRAY
 from src import db
 
 tasks = Blueprint('tasks', __name__)
@@ -39,12 +40,28 @@ def delete_task(id):
     return f'Deleted Task (id: {task.id}, Item: {task.description})', 200
 
 @tasks.route("/api/task/<id>", methods = ["PATCH"])
-def update_event(id):
+def update_task(id):
     task = Task.query.filter_by(id=id)
     status = request.json['status']
+    priority = task[0].priority
+    current_user = User.query.filter(User.task_id.contains([task[0].id])) # FIX THIS
     task.update(dict(status = status))
+    if status == "Completed":
+        current_points = current_user[0].points
+        points_gained = 0
+        match (priority):
+            case "Low":
+                points_gained = 1
+            case "Medium":
+                points_gained = 3
+            case "High":
+                points_gained = 5
+        final_points = points_gained + current_points
+        current_user.update(dict(points = final_points))
+
     db.session.commit()
-    return {'task': format_task(task.one())}, 200
+    # return {'task': format_task(task[0])}
+    return {'task': format_task(task.one()), "user": format_user(current_user.one())}, 200
 
 @tasks.route("/api/task/items", methods = ["GET"])
 def get_team_tasks():
