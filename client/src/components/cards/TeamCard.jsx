@@ -4,6 +4,7 @@ import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
+import Divider from "@mui/material/Divider";
 import { useEffect, useState } from "react";
 
 const TeamCard = ({ team }) => {
@@ -78,36 +79,59 @@ const TeamCard = ({ team }) => {
                 </div>
                 <div style={{ marginBottom: 20, marginTop: 20 }}>
                     <Typography variant="h5">Events</Typography>
-                    <Typography variant="subtitle1">
-                        {events &&
-                            events.map((event, index) => (
-                                <Card>
-                                    <CardContent>
-                                        <Typography variant="h6" key={index}>
-                                            {event.time}
-                                        </Typography>
-                                        <Typography
-                                            variant="subtitle1"
-                                            key={index}
-                                        >
-                                            {event.description}
-                                        </Typography>
-                                    </CardContent>
-                                </Card>
-                            ))}
-                    </Typography>
+                    {events.length === 0 && (
+                        <Typography
+                            variant="subtitle1"
+                            sx={{ textAlign: "center" }}
+                        >
+                            No Current Events
+                        </Typography>
+                    )}
+                    {events &&
+                        events.map((event, index) => (
+                            <Card>
+                                <CardContent>
+                                    <Typography variant="h6" key={index}>
+                                        {event.time}
+                                    </Typography>
+                                    <Typography variant="subtitle1">
+                                        {event.description}
+                                    </Typography>
+                                </CardContent>
+                            </Card>
+                        ))}
                 </div>
                 <div style={{ marginBottom: 20, marginTop: 20 }}>
                     <Typography variant="h5">Members</Typography>
+                    {members.length === 0 && (
+                        <Typography
+                            variant="subtitle1"
+                            sx={{ textAlign: "center" }}
+                        >
+                            No Members currently
+                        </Typography>
+                    )}
                     <List>
                         {members &&
                             members.map((member, index) => (
-                                <ListItem>
-                                    <ListItemText
-                                        primary={member.name}
-                                        secondary={`${member.role} Points:${member.points}`}
-                                    />
-                                </ListItem>
+                                <>
+                                    <ListItem>
+                                        <ListItemText
+                                            primary={
+                                                <Typography variant="h6">
+                                                    {member.name} ||{" "}
+                                                    {member.role}
+                                                </Typography>
+                                            }
+                                            secondary={
+                                                <Typography variant="subtitle1">
+                                                    Points: {member.points}
+                                                </Typography>
+                                            }
+                                        />
+                                    </ListItem>
+                                    <Divider variant="inset" component="li" />
+                                </>
                                 // <Typography variant="subtitle1" key={index}>
                                 //     {member.id} {member.name} {member.role}
                                 // </Typography>

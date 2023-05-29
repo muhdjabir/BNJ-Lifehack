@@ -11,14 +11,14 @@ import IconButton from "@mui/material/IconButton";
 const TeamTable = () => {
     const [value, setValue] = useState(0);
     const [teams, setTeams] = useState([]);
-    const [open, setOpen] = useState(false);
+    const [teamOpen, setTeamOpen] = useState(false);
 
-    const handleClickOpen = () => {
-        setOpen(true);
+    const handleTeamClickOpen = () => {
+        setTeamOpen(true);
     };
 
-    const handleClose = () => {
-        setOpen(false);
+    const handleTeamClose = () => {
+        setTeamOpen(false);
     };
 
     useEffect(() => {
@@ -58,7 +58,7 @@ const TeamTable = () => {
                 display: "grid",
             }}
         >
-            <TeamForm open={open} handleClose={handleClose} />
+            <TeamForm open={teamOpen} handleClose={handleTeamClose} />
             <div
                 style={{
                     margin: "auto",
@@ -67,16 +67,19 @@ const TeamTable = () => {
                     display: "flex",
                 }}
             >
-                <Tabs
-                    value={value}
-                    onChange={handleChange}
-                    variant="scrollable"
-                    scrollButtons="auto"
-                    aria-label="scrollable auto tabs example"
-                >
-                    {teams && teams.map((team) => <Tab label={team.name} />)}
-                </Tabs>
-                <IconButton onClick={handleClickOpen}>
+                {teams && (
+                    <Tabs
+                        value={value}
+                        onChange={handleChange}
+                        variant="scrollable"
+                        scrollButtons="auto"
+                        aria-label="scrollable auto tabs example"
+                    >
+                        {teams &&
+                            teams.map((team) => <Tab label={team.name} />)}
+                    </Tabs>
+                )}
+                <IconButton onClick={handleTeamClickOpen}>
                     <AddBoxIcon />
                 </IconButton>
             </div>

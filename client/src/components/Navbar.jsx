@@ -12,9 +12,10 @@ import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
-import AdbIcon from "@mui/icons-material/Adb";
 import LogoutIcon from "@mui/icons-material/Logout";
+import LoginIcon from "@mui/icons-material/Login";
 import { useAuthContext } from "../hooks/useAuthContext";
+import { useLogout } from "../hooks/useLogout";
 
 const pages = [
     { page: "Teams", path: "/teams" },
@@ -26,6 +27,7 @@ const pages = [
 function ResponsiveAppBar() {
     const [anchorElNav, setAnchorElNav] = useState(null);
     const { user } = useAuthContext();
+    const { logout } = useLogout();
 
     const handleOpenNavMenu = (event) => {
         setAnchorElNav(event.currentTarget);
@@ -39,9 +41,6 @@ function ResponsiveAppBar() {
         <AppBar position="static" sx={{ backgroundColor: "#A6D8D4" }}>
             <Container maxWidth="xl">
                 <Toolbar disableGutters>
-                    <AdbIcon
-                        sx={{ display: { xs: "none", md: "flex" }, mr: 1 }}
-                    />
                     <Typography
                         variant="h5"
                         noWrap
@@ -93,47 +92,66 @@ function ResponsiveAppBar() {
                                 display: { xs: "block", md: "none" },
                             }}
                         >
-                            {pages.map((page) => (
-                                <Link
-                                    to={page["path"]}
-                                    key={page["page"]}
-                                    style={{
-                                        textDecoration: "none",
-                                        padding: 3,
-                                    }}
-                                >
-                                    <MenuItem
+                            {user &&
+                                pages.map((page) => (
+                                    <Link
+                                        to={page["path"]}
                                         key={page["page"]}
-                                        onClick={handleCloseNavMenu}
+                                        style={{
+                                            textDecoration: "none",
+                                            padding: 3,
+                                        }}
+                                    >
+                                        <MenuItem
+                                            key={page["page"]}
+                                            onClick={handleCloseNavMenu}
+                                        >
+                                            <Typography
+                                                textAlign="center"
+                                                color={"black"}
+                                            >
+                                                {page["page"]}
+                                            </Typography>
+                                        </MenuItem>
+                                    </Link>
+                                ))}
+                            {user && (
+                                <Link to="/" style={{ textDecoration: "none" }}>
+                                    <MenuItem
+                                        key="Logout"
+                                        onClick={() => {
+                                            handleCloseNavMenu();
+                                            logout();
+                                        }}
                                     >
                                         <Typography
                                             textAlign="center"
                                             color={"black"}
                                         >
-                                            {page["page"]}
+                                            <LogoutIcon />
+                                            Logout
                                         </Typography>
                                     </MenuItem>
                                 </Link>
-                            ))}
-                            <Link to="/" style={{ textDecoration: "none" }}>
-                                <MenuItem
-                                    key="Logout"
-                                    onClick={handleCloseNavMenu}
+                            )}
+                            {!user && (
+                                <Link
+                                    to="/login"
+                                    style={{ textDecoration: "none" }}
                                 >
-                                    <Typography
-                                        textAlign="center"
-                                        color={"black"}
-                                    >
-                                        <LogoutIcon />
-                                        Logout
-                                    </Typography>
-                                </MenuItem>
-                            </Link>
+                                    <MenuItem key="Login">
+                                        <Typography
+                                            textAlign="center"
+                                            color={"black"}
+                                        >
+                                            <LoginIcon />
+                                            Login
+                                        </Typography>
+                                    </MenuItem>
+                                </Link>
+                            )}
                         </Menu>
                     </Box>
-                    <AdbIcon
-                        sx={{ display: { xs: "flex", md: "none" }, mr: 1 }}
-                    />
                     <Typography
                         variant="h5"
                         noWrap
@@ -158,49 +176,92 @@ function ResponsiveAppBar() {
                             display: { xs: "none", md: "flex" },
                         }}
                     >
-                        {pages.map((page) => (
-                            <Link
-                                to={page["path"]}
-                                key={page["page"]}
-                                style={{ textDecoration: "none" }}
-                            >
-                                <Button
+                        {user &&
+                            pages.map((page) => (
+                                <Link
+                                    to={page["path"]}
                                     key={page["page"]}
-                                    onClick={handleCloseNavMenu}
-                                    sx={{
-                                        my: 2,
-                                        color: "black",
-                                        display: "block",
-                                    }}
+                                    style={{ textDecoration: "none" }}
                                 >
-                                    {page["page"]}
-                                </Button>
-                            </Link>
-                        ))}
+                                    <Button
+                                        key={page["page"]}
+                                        onClick={handleCloseNavMenu}
+                                        sx={{
+                                            my: 2,
+                                            color: "black",
+                                            display: "block",
+                                        }}
+                                    >
+                                        {page["page"]}
+                                    </Button>
+                                </Link>
+                            ))}
                     </Box>
                     <Box sx={{ flexGrow: 0, display: "flex" }}>
-                        <Link to="/" style={{ textDecoration: "none" }}>
-                            <Button
-                                variant="outlined"
-                                color="success"
-                                sx={{
-                                    backgroundColor: "white",
-                                    marginX: 3,
-                                    color: "black",
-                                    display: { sm: "none", md: "flex" },
-                                }}
-                            >
-                                {" "}
-                                <LogoutIcon />
-                                Log out
-                            </Button>
-                        </Link>
-                        <Tooltip title="Open settings">
-                            <Avatar
-                                alt="Remy Sharp"
-                                // src="/static/images/avatar/2.jpg"
-                            />
-                        </Tooltip>
+                        {user && (
+                            <Link to="/" style={{ textDecoration: "none" }}>
+                                <Button
+                                    onClick={logout}
+                                    variant="outlined"
+                                    color="success"
+                                    sx={{
+                                        backgroundColor: "white",
+                                        marginX: 3,
+                                        color: "black",
+                                        display: { sm: "none", md: "flex" },
+                                    }}
+                                >
+                                    <LogoutIcon />
+                                    Log out
+                                </Button>
+                            </Link>
+                        )}
+                        {!user && (
+                            <>
+                                <Link
+                                    to="/login"
+                                    style={{ textDecoration: "none" }}
+                                >
+                                    <Button
+                                        variant="outlined"
+                                        color="success"
+                                        sx={{
+                                            backgroundColor: "white",
+                                            marginX: 3,
+                                            color: "black",
+                                            display: { sm: "none", md: "flex" },
+                                        }}
+                                    >
+                                        Log in
+                                    </Button>
+                                </Link>
+                                <Link
+                                    to="/register"
+                                    style={{ textDecoration: "none" }}
+                                >
+                                    <Button
+                                        variant="outlined"
+                                        color="success"
+                                        sx={{
+                                            backgroundColor: "white",
+                                            marginX: 3,
+                                            color: "black",
+                                            display: { sm: "none", md: "flex" },
+                                        }}
+                                    >
+                                        Join Us
+                                    </Button>
+                                </Link>
+                            </>
+                        )}
+                        {user && (
+                            <Tooltip title={user["user"]["email"]}>
+                                <Avatar
+                                    alt="Remy Sharp"
+                                    // src="/static/images/avatar/2.jpg"
+                                />
+                            </Tooltip>
+                        )}
                     </Box>
                 </Toolbar>
             </Container>
