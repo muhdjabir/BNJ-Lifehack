@@ -67,15 +67,18 @@ const TeamTable = () => {
                     display: "flex",
                 }}
             >
-                <Tabs
-                    value={value}
-                    onChange={handleChange}
-                    variant="scrollable"
-                    scrollButtons="auto"
-                    aria-label="scrollable auto tabs example"
-                >
-                    {teams && teams.map((team) => <Tab label={team.name} />)}
-                </Tabs>
+                {teams && (
+                    <Tabs
+                        value={value}
+                        onChange={handleChange}
+                        variant="scrollable"
+                        scrollButtons="auto"
+                        aria-label="scrollable auto tabs example"
+                    >
+                        {teams &&
+                            teams.map((team) => <Tab label={team.name} />)}
+                    </Tabs>
+                )}
                 <IconButton onClick={handleClickOpen}>
                     <AddBoxIcon />
                 </IconButton>
