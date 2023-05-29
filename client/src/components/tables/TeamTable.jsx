@@ -76,7 +76,7 @@ const TeamTable = () => {
                 >
                     {teams && teams.map((team) => <Tab label={team.name} />)}
                 </Tabs>
-                <IconButton onClick={() => setOpen(true)}>
+                <IconButton onClick={handleClickOpen}>
                     <AddBoxIcon />
                 </IconButton>
             </div>
