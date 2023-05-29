@@ -5,7 +5,7 @@ const Teams = () => {
     return (
         <div>
             <Typography
-                variant="h4"
+                variant="h5"
                 sx={{
                     textAlign: "center",
                     marginTop: 5,
