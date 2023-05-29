@@ -29,6 +29,20 @@ const TeamCard = ({ team }) => {
         fetchMembers();
     }, []);
 
+    useEffect(() => {
+        const fetchEvents = async () => {
+            const response = await fetch(`/api/event/team/${team.id}`);
+            const json = await response.json();
+
+            if (response.ok) {
+                // dispatch({ type: "SET_Events", payload: json });
+                setEvents(json["events"]);
+            }
+        };
+
+        fetchEvents();
+    }, []);
+
     return (
         <Card
             sx={{
@@ -36,19 +50,38 @@ const TeamCard = ({ team }) => {
             }}
         >
             <CardContent>
-                <Typography variant="h5">Manager ID</Typography>
-                <Typography variant="p">{team.manager_id}</Typography>
-                <Typography variant="h5">Description</Typography>
-                <Typography variant="p">{team.description}</Typography>
-                <Typography variant="h5">Events</Typography>
-                <Typography variant="p">{team.events_id}</Typography>
-                <Typography variant="h5">Members</Typography>
-                {members &&
-                    members.map((member, index) => (
-                        <Typography variant="p" key={index}>
-                            {member.id} {member.name} {member.role}
-                        </Typography>
-                    ))}
+                <div style={{ marginBottom: 20, marginTop: 20 }}>
+                    <Typography variant="h5">Manager ID</Typography>
+                    <Typography variant="subtitle1">
+                        {team.manager_id}
+                    </Typography>
+                </div>
+                <div style={{ marginBottom: 20, marginTop: 20 }}>
+                    <Typography variant="h5">Description</Typography>
+                    <Typography variant="subtitle1">
+                        {team.description}
+                    </Typography>
+                </div>
+                <div style={{ marginBottom: 20, marginTop: 20 }}>
+                    <Typography variant="h5">Events</Typography>
+                    <Typography variant="subtitle1">
+                        {events &&
+                            events.map((event, index) => (
+                                <Typography variant="subtitle1" key={index}>
+                                    {event.id} {event.description} {event.time}
+                                </Typography>
+                            ))}
+                    </Typography>
+                </div>
+                <div style={{ marginBottom: 20, marginTop: 20 }}>
+                    <Typography variant="h5">Members</Typography>
+                    {members &&
+                        members.map((member, index) => (
+                            <Typography variant="subtitle1" key={index}>
+                                {member.id} {member.name} {member.role}
+                            </Typography>
+                        ))}
+                </div>
             </CardContent>
         </Card>
     );
