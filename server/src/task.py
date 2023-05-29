@@ -63,7 +63,7 @@ def update_task(id):
     # return {'task': format_task(task[0])}
     return {'task': format_task(task.one()), "user": format_user(current_user.one())}, 200
 
-@tasks.route("/api/task/items", methods = ["GET"])
+@tasks.route("/api/task/items", methods = ["POST"])
 def get_team_tasks():
     task_id = request.json["task"]
     print(task_id)
