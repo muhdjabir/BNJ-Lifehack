@@ -3,9 +3,9 @@ from .models import User, format_user
 from flask_jwt_extended import create_access_token, get_jwt,get_jwt_identity, unset_jwt_cookies
 from src import db
 
-auth = Blueprint('auth', __name__)
+auths = Blueprint('auths', __name__)
 
-@auth.route('/api/auth/register', methods = ['POST'])
+@auths.route('/api/auth/register', methods = ['POST'])
 def register():
     email = request.json['email'].lower()
     name = request.json['name']
@@ -23,7 +23,7 @@ def register():
 
     return {"user": format_user(new_user), "token":access_token}, 200
 
-@auth.route('/api/auth/login', methods = ['POST'])
+@auths.route('/api/auth/login', methods = ['POST'])
 def login():
     email = request.json['email']
     password = request.json['password']
@@ -39,7 +39,7 @@ def login():
     access_token = create_access_token(identity=email)
     return {"user": format_user(user), "token":access_token}, 200
 
-@auth.route('/api/auth/logout', methods = ['POST'])
+@auths.route('/api/auth/logout', methods = ['POST'])
 def logout():
     response = jsonify({"msg": "logout successful"})
     unset_jwt_cookies(response)
