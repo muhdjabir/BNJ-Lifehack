@@ -1,5 +1,6 @@
 import Typography from "@mui/material/Typography";
 import Leaderboard from "../components/tables/Leaderboard";
+import TeamDashboard from "../components/tables/TeamDashboard";
 
 const Dashboard = () => {
     return (
@@ -13,8 +14,17 @@ const Dashboard = () => {
             >
                 Dashboard
             </Typography>
-            <div style={{ display: "flex" }}>
+            <div style={{ display: "flex", margin: 3, align: "center" }}>
                 <Leaderboard />
+            </div>
+            <div
+                style={{
+                    margin: 3,
+                    align: "center",
+                    textAlign: "center",
+                }}
+            >
+                <TeamDashboard />
             </div>
         </div>
     );
