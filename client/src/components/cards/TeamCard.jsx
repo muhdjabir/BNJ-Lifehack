@@ -79,7 +79,7 @@ const TeamCard = ({ team }) => {
                 </div>
                 <div style={{ marginBottom: 20, marginTop: 20 }}>
                     <Typography variant="h5">Events</Typography>
-                    {events.length == 0 && (
+                    {events.length === 0 && (
                         <Typography
                             variant="subtitle1"
                             sx={{ textAlign: "center" }}
@@ -103,7 +103,7 @@ const TeamCard = ({ team }) => {
                 </div>
                 <div style={{ marginBottom: 20, marginTop: 20 }}>
                     <Typography variant="h5">Members</Typography>
-                    {members.length == 0 && (
+                    {members.length === 0 && (
                         <Typography
                             variant="subtitle1"
                             sx={{ textAlign: "center" }}

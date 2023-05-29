@@ -16,7 +16,7 @@ import { useState } from "react";
 const Register = () => {
     const navigate = useNavigate();
     const [role, setRole] = useState("Employee");
-    const { signup, error, isLoading } = useSignup();
+    const { signup, error } = useSignup();
 
     const handleSubmit = (event) => {
         event.preventDefault();

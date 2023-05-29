@@ -12,7 +12,7 @@ import Typography from "@mui/material/Typography";
 import Alert from "@mui/material/Alert";
 
 const Login = () => {
-    const { login, error, isLoading } = useLogin();
+    const { login, error } = useLogin();
     const navigate = useNavigate();
 
     const handleSubmit = async (event) => {
