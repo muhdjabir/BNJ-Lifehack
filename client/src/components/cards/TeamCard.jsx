@@ -6,18 +6,27 @@ import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 import Divider from "@mui/material/Divider";
 import EditCalendarIcon from "@mui/icons-material/EditCalendar";
+import PersonAddIcon from "@mui/icons-material/PersonAdd";
 import EventForm from "../forms/EventForm";
+import MemberForm from "../forms/MemberForm";
+import { useAuthContext } from "../../hooks/useAuthContext";
 import { useEffect, useState } from "react";
 import { IconButton } from "@mui/material";
 
 const TeamCard = ({ team }) => {
+    const { user } = useAuthContext();
     const [manager, setManager] = useState({});
     const [events, setEvents] = useState([]);
     const [members, setMembers] = useState([]);
     const [open, setOpen] = useState(false);
+    const [add, setAdd] = useState(false);
 
     const handleClose = () => {
         setOpen(false);
+    };
+
+    const handleAddClose = () => {
+        setAdd(false);
     };
 
     useEffect(() => {
@@ -75,6 +84,7 @@ const TeamCard = ({ team }) => {
             }}
         >
             <EventForm open={open} handleClose={handleClose} id={team.id} />
+            <MemberForm open={add} handleClose={handleAddClose} />
             <CardContent>
                 <div style={{ marginBottom: 20, marginTop: 20 }}>
                     <Typography variant="h5">Manager</Typography>
@@ -89,9 +99,11 @@ const TeamCard = ({ team }) => {
                 <div style={{ marginBottom: 20, marginTop: 20 }}>
                     <Typography variant="h5">
                         Events{" "}
-                        <IconButton onClick={() => setOpen(true)}>
-                            <EditCalendarIcon />
-                        </IconButton>
+                        {user && user["user"]["role"] === "Manager" && (
+                            <IconButton onClick={() => setOpen(true)}>
+                                <EditCalendarIcon />
+                            </IconButton>
+                        )}
                     </Typography>
                     {events.length === 0 && (
                         <Typography
@@ -116,7 +128,14 @@ const TeamCard = ({ team }) => {
                         ))}
                 </div>
                 <div style={{ marginBottom: 20, marginTop: 20 }}>
-                    <Typography variant="h5">Members</Typography>
+                    <Typography variant="h5">
+                        Members{" "}
+                        {user && user["user"]["role"] === "Manager" && (
+                            <IconButton onClick={() => setAdd(true)}>
+                                <PersonAddIcon />
+                            </IconButton>
+                        )}
+                    </Typography>
                     {members.length === 0 && (
                         <Typography
                             variant="subtitle1"
