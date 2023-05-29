@@ -12,19 +12,6 @@ import Box from "@mui/material/Box";
 const TeamForm = ({ open, handleClose }) => {
     const { user } = useAuthContext();
 
-    // const createTeam = async () => {
-    //     const response = fetch("/api/team", {
-    //         method: "POST",
-    //         body: JSON.stringify({
-    //             name: name,
-    //             description: description,
-    //             manager_id: user["user"]["id"],
-    //         }),
-    //     });
-    //     console.log("chicken");
-    //     handleClose();
-    // };
-
     const handleSubmit = async (event) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);

@@ -5,12 +5,20 @@ import ListItemText from "@mui/material/ListItemText";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 import Divider from "@mui/material/Divider";
+import EditCalendarIcon from "@mui/icons-material/EditCalendar";
+import EventForm from "../forms/EventForm";
 import { useEffect, useState } from "react";
+import { IconButton } from "@mui/material";
 
 const TeamCard = ({ team }) => {
     const [manager, setManager] = useState({});
     const [events, setEvents] = useState([]);
     const [members, setMembers] = useState([]);
+    const [open, setOpen] = useState(false);
+
+    const handleClose = () => {
+        setOpen(false);
+    };
 
     useEffect(() => {
         const fetchMembers = async () => {
@@ -66,6 +74,7 @@ const TeamCard = ({ team }) => {
                 textAlign: "left",
             }}
         >
+            <EventForm open={open} handleClose={handleClose} id={team.id} />
             <CardContent>
                 <div style={{ marginBottom: 20, marginTop: 20 }}>
                     <Typography variant="h5">Manager</Typography>
@@ -78,7 +87,12 @@ const TeamCard = ({ team }) => {
                     </Typography>
                 </div>
                 <div style={{ marginBottom: 20, marginTop: 20 }}>
-                    <Typography variant="h5">Events</Typography>
+                    <Typography variant="h5">
+                        Events{" "}
+                        <IconButton onClick={() => setOpen(true)}>
+                            <EditCalendarIcon />
+                        </IconButton>
+                    </Typography>
                     {events.length === 0 && (
                         <Typography
                             variant="subtitle1"
