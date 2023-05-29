@@ -7,11 +7,14 @@ import TeamCard from "../cards/TeamCard";
 import TeamForm from "../forms/TeamForm";
 import AddBoxIcon from "@mui/icons-material/AddBox";
 import IconButton from "@mui/material/IconButton";
+import { useAuthContext } from "../../hooks/useAuthContext";
 
 const TeamTable = () => {
     const [value, setValue] = useState(0);
     const [teams, setTeams] = useState([]);
     const [teamOpen, setTeamOpen] = useState(false);
+    const [teamArray, setTeamArray] = useState([]);
+    const { user } = useAuthContext();
 
     const handleTeamClickOpen = () => {
         setTeamOpen(true);
@@ -22,27 +25,38 @@ const TeamTable = () => {
     };
 
     useEffect(() => {
-        const fetchTeams = async () => {
-            const response = await fetch(
-                `/api/team`
-                // {
-                // method: "POST",
-                // body: [1],
-                // headers: {
-                //     "Content-Type": "application/json",
-                // },
-                // }
-            );
+        const fetchArray = async () => {
+            const response = await fetch(`/api/user/${user["user"]["id"]}`);
             const json = await response.json();
 
             if (response.ok) {
-                // dispatch({ type: "SET_Teams", payload: json });
+                setTeamArray(json["user"]["team_id"]);
+            }
+        };
+        if (user) {
+            fetchArray();
+        }
+    }, [user]);
+
+    useEffect(() => {
+        const fetchTeams = async () => {
+            const response = await fetch(`/api/team/items`, {
+                method: "POST",
+                body: JSON.stringify({ team: teamArray }),
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            });
+            const json = await response.json();
+
+            if (response.ok) {
                 setTeams(json["teams"]);
             }
         };
-
-        fetchTeams();
-    }, []);
+        if (teamArray) {
+            fetchTeams();
+        }
+    }, [teamArray]);
 
     const handleChange = (event, newValue) => {
         setValue(newValue);
@@ -79,9 +93,11 @@ const TeamTable = () => {
                             teams.map((team) => <Tab label={team.name} />)}
                     </Tabs>
                 )}
-                <IconButton onClick={handleTeamClickOpen}>
-                    <AddBoxIcon />
-                </IconButton>
+                {user && user["user"]["role"] === "Manager" && (
+                    <IconButton onClick={handleTeamClickOpen}>
+                        <AddBoxIcon />
+                    </IconButton>
+                )}
             </div>
             {teams &&
                 teams.map((team, index) => (
