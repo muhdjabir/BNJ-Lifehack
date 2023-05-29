@@ -7,17 +7,16 @@ import { useAuthContext } from "./useAuthContext";
 export const useSignup = () => {
     const [error, setError] = useState(null);
     const [isLoading, setIsLoading] = useState(null);
-    const [success, setSuccess] = useState(null);
     const {dispatch} = useAuthContext();
 
-    const signup = async (email, password, role, name, contact, position, years, level) => {
+    const signup = async (name, email, password, role) => {
         setIsLoading(true);
         setError(null);
 
-        const response = await fetch(`${process.env.REACT_APP_DB_URL}/api/auth/signup`, {
+        const response = await fetch(`/api/auth/register`, {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({email, password, role})
+            body: JSON.stringify({name, email, password, role})
         });
         const json = await response.json();
 
@@ -27,26 +26,10 @@ export const useSignup = () => {
             console.log(error);
         }
         if (response.ok) {
-            const response2 = await fetch(`${process.env.REACT_APP_DB_URL}/api/users/`, {
-                method: 'POST',
-                headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify({name, contact, years, position, level, email})
-            });
-            const json2 = response2.json();
-            if (!response2.ok) {
-                setIsLoading (false);
-                setError(json2.error);
-            }
-            if (response2.ok) {
-                // save user to local storage
-                localStorage.setItem('user', JSON.stringify(json));
-
-                //update the auth context
-                dispatch({type: 'LOGIN', PAYLOAD: json});
-                setIsLoading(false);
-                setSuccess("Account successfully created");
-            }
+            localStorage.setItem('user', JSON.stringify(json));
+            dispatch({type: 'LOGIN', payload: json});
+            setIsLoading(false);
         }
     }
-    return { signup, isLoading, error, success};
+    return { signup, isLoading, error};
 }

@@ -1,5 +1,5 @@
 import { Link, useNavigate } from "react-router-dom";
-import { useLogin } from "../hooks/useLogin";
+import { useSignup } from "../hooks/useSignup";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -9,22 +9,22 @@ import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
+import { InputLabel, Select, MenuItem } from "@mui/material";
 import Alert from "@mui/material/Alert";
+import { useState } from "react";
 
-const Login = () => {
-    const { login, error, isLoading } = useLogin();
+const Register = () => {
     const navigate = useNavigate();
+    const [role, setRole] = useState("Employee");
+    const { signup, error, isLoading } = useSignup();
 
-    const handleSubmit = async (event) => {
+    const handleSubmit = (event) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
+        const name = data.get("name");
         const email = data.get("email");
         const password = data.get("password");
-        console.log({
-            email: email,
-            password: password,
-        });
-        await login(email.toLowerCase(), password);
+        signup(name, email, password, role);
         navigate("/dashboard");
     };
 
@@ -70,7 +70,7 @@ const Login = () => {
                         <LockOutlinedIcon />
                     </Avatar>
                     <Typography component="h1" variant="h5">
-                        Sign in
+                        Sign Up
                     </Typography>
                     <Box
                         component="form"
@@ -78,6 +78,15 @@ const Login = () => {
                         onSubmit={handleSubmit}
                         sx={{ mt: 1 }}
                     >
+                        <TextField
+                            margin="normal"
+                            required
+                            fullWidth
+                            id="name"
+                            label="Name"
+                            name="name"
+                            autoFocus
+                        />
                         <TextField
                             margin="normal"
                             required
@@ -96,6 +105,17 @@ const Login = () => {
                             type="password"
                             id="password"
                         />
+                        <InputLabel id="role-label">Role</InputLabel>
+                        <Select
+                            labelId="role-label"
+                            id="role"
+                            value={role}
+                            label="Role"
+                            onChange={(e) => setRole(e.target.value)}
+                        >
+                            <MenuItem value="Employee">Employee</MenuItem>
+                            <MenuItem value="Manager">Manager</MenuItem>
+                        </Select>
                         <Button
                             type="submit"
                             fullWidth
@@ -107,8 +127,8 @@ const Login = () => {
                         {error && <Alert severity="error">{error}</Alert>}
                         <Grid container>
                             <Grid item>
-                                <Link to="/register" variant="body2">
-                                    Don't have an account? Sign Up
+                                <Link to="/login">
+                                    Already have an account? Login
                                 </Link>
                             </Grid>
                         </Grid>
@@ -119,4 +139,4 @@ const Login = () => {
     );
 };
 
-export default Login;
+export default Register;
