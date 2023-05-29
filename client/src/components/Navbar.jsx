@@ -14,6 +14,7 @@ import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
 import LogoutIcon from "@mui/icons-material/Logout";
+import { useAuthContext } from "../hooks/useAuthContext";
 
 const pages = [
     { page: "Teams", path: "/teams" },
@@ -24,7 +25,7 @@ const pages = [
 
 function ResponsiveAppBar() {
     const [anchorElNav, setAnchorElNav] = useState(null);
-    const [user, setUser] = useState("");
+    const { user } = useAuthContext();
 
     const handleOpenNavMenu = (event) => {
         setAnchorElNav(event.currentTarget);
@@ -95,6 +96,7 @@ function ResponsiveAppBar() {
                             {pages.map((page) => (
                                 <Link
                                     to={page["path"]}
+                                    key={page["page"]}
                                     style={{
                                         textDecoration: "none",
                                         padding: 3,
@@ -159,6 +161,7 @@ function ResponsiveAppBar() {
                         {pages.map((page) => (
                             <Link
                                 to={page["path"]}
+                                key={page["page"]}
                                 style={{ textDecoration: "none" }}
                             >
                                 <Button
@@ -195,7 +198,7 @@ function ResponsiveAppBar() {
                         <Tooltip title="Open settings">
                             <Avatar
                                 alt="Remy Sharp"
-                                src="/static/images/avatar/2.jpg"
+                                // src="/static/images/avatar/2.jpg"
                             />
                         </Tooltip>
                     </Box>

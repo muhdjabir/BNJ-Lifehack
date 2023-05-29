@@ -51,11 +51,12 @@ def add_task(id):
     # return {'user': temp_array}
     return {'user': format_user(user.one())}, 200
 
-@users.route("/api/user/items", methods = ["GET"])
+@users.route("/api/user/items", methods = ["POST"])
 def get_user_users():
     user_id = request.json["user"]
-    users = User.query.filter(user.id.in_(user_id)).all()
+    users = User.query.filter(User.id.in_(user_id)).all()
     user_list = []
     for user in users:
         user_list.append(format_user(user))
+    # return {"error": "msg"}
     return {'users': user_list}, 200
