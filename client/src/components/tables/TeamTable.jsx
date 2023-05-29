@@ -16,7 +16,7 @@ const TeamTable = () => {
     };
 
     useEffect(() => {
-        const fetchScrims = async () => {
+        const fetchTeams = async () => {
             const response = await fetch(
                 `/api/team`
                 // {
@@ -30,12 +30,12 @@ const TeamTable = () => {
             const json = await response.json();
 
             if (response.ok) {
-                // dispatch({ type: "SET_SCRIMS", payload: json });
+                // dispatch({ type: "SET_Teams", payload: json });
                 setTeams(json["teams"]);
             }
         };
 
-        fetchScrims();
+        fetchTeams();
         console.log(teams);
     }, []);
 
