@@ -3,6 +3,9 @@ Created by BNJ
 - Muhammad Jabir
 - Nuzzul Haqim
 - Brian Huang
+
+![localhost_3000_](https://github.com/muhdjabir/BNJ-Lifehack/assets/99940885/b0d20bcd-7e02-4021-9f4a-356677628037)
+
 ## Chosen Theme
 ### Revolutionizing the Workplace 
 Problem Statement: A mundane career can be both fulfilling and exciting in a virtual and innovative workplace setting. Design an application which allows employees to seek joy in their work and offers practical benefits.
