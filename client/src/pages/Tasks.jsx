@@ -1,4 +1,6 @@
 import Typography from "@mui/material/Typography";
+//import AddTask from "../components/AddTask";
+import Board from "../components/taskboard/Board";
 
 const Tasks = () => {
     return (
@@ -12,6 +14,15 @@ const Tasks = () => {
             >
                 Tasks
             </Typography>
+            <div 
+                style={{ 
+                    display: "flex",
+                    marginTop: 20, 
+                    marginLeft: 20
+                }}
+            >
+                <Board />
+            </div>
         </div>
     );
 };
