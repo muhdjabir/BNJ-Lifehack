@@ -33,11 +33,14 @@ const Leaderboard = () => {
         <TableContainer
             component={Paper}
             sx={{
-                width: { xs: "100%", md: "75%", lg: "45%" },
+                // width: { xs: "100%", md: "75%", lg: "45%" },
                 margin: { md: "auto", lg: 3 },
             }}
         >
-            <Table sx={{ minWidth: 650 }} aria-label="a dense table">
+            <Table
+                sx={{ minWidth: 650, margin: "auto" }}
+                aria-label="a dense table"
+            >
                 <TableHead>
                     <TableRow>
                         <TableCell>Ranking</TableCell>

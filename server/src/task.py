@@ -26,6 +26,30 @@ def get_tasks():
         task_list.append(format_task(task))
     return {'tasks': task_list}, 200
 
+@tasks.route("/api/task/pending", methods = ["GET"])
+def get_pending_tasks():
+    tasks = Task.query.filter_by(status = "Pending").all()
+    task_list = []
+    for task in tasks:
+        task_list.append(format_task(task))
+    return {'tasks': task_list}, 200
+
+@tasks.route("/api/task/open", methods = ["GET"])
+def get_open_tasks():
+    tasks = Task.query.filter_by(status = "Open").all()
+    task_list = []
+    for task in tasks:
+        task_list.append(format_task(task))
+    return {'tasks': task_list}, 200
+
+@tasks.route("/api/task/completed", methods = ["GET"])
+def get_completed_tasks():
+    tasks = Task.query.filter_by(status = "Completed").all()
+    task_list = []
+    for task in tasks:
+        task_list.append(format_task(task))
+    return {'tasks': task_list}, 200
+
 @tasks.route("/api/task/<id>", methods = ["GET"])
 def get_task(id):
     task = Task.query.filter_by(id = id).one()
