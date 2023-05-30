@@ -1,5 +1,5 @@
 import Typography from "@mui/material/Typography";
-
+import TabBar from "../components/TabBar";
 const Resources = () => {
     return (
         <div>
@@ -11,6 +11,7 @@ const Resources = () => {
                 }}
             >
                 Resources
+            <TabBar />
             </Typography>
         </div>
     );
