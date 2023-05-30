@@ -84,7 +84,7 @@ const TeamCard = ({ team }) => {
             }}
         >
             <EventForm open={open} handleClose={handleClose} id={team.id} />
-            <MemberForm open={add} handleClose={handleAddClose} />
+            <MemberForm open={add} handleClose={handleAddClose} id={team.id} />
             <CardContent>
                 <div style={{ marginBottom: 20, marginTop: 20 }}>
                     <Typography variant="h5">Manager</Typography>

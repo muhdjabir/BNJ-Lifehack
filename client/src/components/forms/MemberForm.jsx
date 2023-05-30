@@ -3,29 +3,45 @@ import TextField from "@mui/material/TextField";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
-import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import { useAuthContext } from "../../hooks/useAuthContext";
-import { useState } from "react";
-import Box from "@mui/material/Box";
+import { useState, useEffect } from "react";
+import Grid from "@mui/material/Grid";
+import List from "@mui/material/List";
+import ListItem from "@mui/material/ListItem";
+import ListItemIcon from "@mui/material/ListItemIcon";
+import ListItemText from "@mui/material/ListItemText";
+import IconButton from "@mui/material/IconButton";
+import AddIcon from "@mui/icons-material/Add";
+import { Typography } from "@mui/material";
 
-const MemberForm = ({ open, handleClose }) => {
+const MemberForm = ({ open, handleClose, id }) => {
     const { user } = useAuthContext();
+    const [people, setPeople] = useState([]);
 
-    const handleSubmit = async (event) => {
-        event.preventDefault();
-        const data = new FormData(event.currentTarget);
-        const name = data.get("name");
-        const description = data.get("description");
-        const response = await fetch("/api/team", {
-            method: "POST",
+    useEffect(() => {
+        const fetchPeople = async () => {
+            const response = await fetch(`/api/user`);
+            const json = await response.json();
+
+            if (response.ok) {
+                setPeople(json["users"]);
+            }
+        };
+
+        if (user) {
+            fetchPeople();
+        }
+    }, []);
+
+    const addMember = async (member_id) => {
+        const response = await fetch(`/api/team/${id}`, {
+            method: "PATCH",
             headers: {
                 "Content-Type": "application/json",
             },
             body: JSON.stringify({
-                name: name,
-                description: description,
-                manager_id: user["user"]["id"],
+                members_id: member_id,
             }),
         });
         if (response.ok) {
@@ -38,38 +54,32 @@ const MemberForm = ({ open, handleClose }) => {
             <Dialog open={open} onClose={handleClose}>
                 <DialogTitle>Add new members</DialogTitle>
                 <DialogContent>
-                    {/* <DialogContentText>
-                        To create a new team, please enter in the team name and
-                        description of the team. After creation, you will be
-                        granted the ability to create team events and add
-                        members to your team.
-                    </DialogContentText> */}
-
-                    <TextField
-                        autoFocus
-                        margin="dense"
-                        name="name"
-                        id="name"
-                        label="Member Name"
-                        type="text"
-                        fullWidth
-                        variant="standard"
-                    />
-                    <TextField
-                        autoFocus
-                        margin="dense"
-                        name="description"
-                        id="description"
-                        label="Member Description"
-                        type="text"
-                        multiline
-                        fullWidth
-                        variant="standard"
-                    />
+                    {people &&
+                        people.map((person) => (
+                            <Grid item xs={12} md={6}>
+                                <List dense={true}>
+                                    <ListItem>
+                                        <ListItemIcon>
+                                            <IconButton
+                                                onClick={() =>
+                                                    addMember(person.id)
+                                                }
+                                            >
+                                                <AddIcon />
+                                            </IconButton>
+                                        </ListItemIcon>
+                                        <ListItemText
+                                            primary={person.name}
+                                            secondary={person.role}
+                                        />
+                                    </ListItem>
+                                    ,
+                                </List>
+                            </Grid>
+                        ))}
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={handleClose}>Cancel</Button>
-                    <Button type="submit">Create</Button>
                 </DialogActions>
             </Dialog>
         </div>
