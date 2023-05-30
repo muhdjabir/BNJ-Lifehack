@@ -5,6 +5,8 @@ import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import Divider from "@mui/material/Divider";
 import ListItemText from "@mui/material/ListItemText";
+import Card from "@mui/material/Card";
+import CardContent from "@mui/material/CardContent";
 
 const TeamDashboard = () => {
     const { user } = useAuthContext();
@@ -49,21 +51,29 @@ const TeamDashboard = () => {
     return (
         <div>
             <Typography variant="h5">Your Teams</Typography>
-            <List
-                sx={{
-                    width: "100%",
-                    maxWidth: 360,
-                    bgcolor: "background.paper",
-                }}
-            >
-                {teams &&
-                    teams.map((team) => (
-                        <ListItem>
-                            <ListItemText primary={team.description} />
-                            <Divider variant="inset" component="li" />
-                        </ListItem>
-                    ))}
-            </List>
+            {teams &&
+                teams.map((team) => (
+                    <Card
+                        variant="outlined"
+                        sx={{
+                            align: "center",
+                            textAlign: "left",
+                            margin: "auto",
+                            marginTop: 5,
+                            padding: 5,
+                            width: {
+                                md: "60%",
+                            },
+                        }}
+                    >
+                        <Typography variant="h6">
+                            Team Name: {team.name}
+                        </Typography>
+                        <Typography variant="subtitle1">
+                            Team Description: {team.description}
+                        </Typography>
+                    </Card>
+                ))}
         </div>
     );
 };

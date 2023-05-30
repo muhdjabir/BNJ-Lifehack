@@ -43,7 +43,7 @@ def get_open_tasks():
     return {'tasks': task_list}, 200
 
 @tasks.route("/api/task/completed", methods = ["GET"])
-def get_tasks():
+def get_completed_tasks():
     tasks = Task.query.filter_by(status = "Completed").all()
     task_list = []
     for task in tasks:
